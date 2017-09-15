@@ -1,0 +1,7 @@
+{
+  "utterance": "cat fact",
+  "intent_type": "RandomCatIntent",
+  "intent": {
+    "CatEventKeyword": "cat fact"
+  }
+}
