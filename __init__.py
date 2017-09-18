@@ -15,14 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Mycroft Core.  If not, see <http://www.gnu.org/licenses/>.
 
-
-# Visit https://docs.mycroft.ai/skill.creation for more detailed information
-# on the structure of this skill and its containing folder, as well as
-# instructions for designing your own skill based on this template.
-
-
-# Import statements: the list of outside modules you'll be using in your
-# skills, whether from other files in mycroft-core or from external libraries
 from os.path import dirname
 
 from adapt.intent import IntentBuilder
@@ -39,20 +31,30 @@ LOGGER = getLogger(__name__)
 # The logic of each skill is contained within its own class, which inherits
 # base methods from the MycroftSkill class with the syntax you can see below:
 # "class ____Skill(MycroftSkill)"
-class CatFactSkill(MycroftSkill):
+class NumberSkill(MycroftSkill):
 
     # The constructor of the skill, which calls MycroftSkill's constructor
     def __init__(self):
-        super(CatFactSkill, self).__init__(name="CatFactSkill")
+        super(NumberSkill, self).__init__(name="NumberSkill")
 
     # This method loads the files needed for the skill's functioning, and
     # creates and registers each intent that the skill uses
     def initialize(self):
-        self.load_data_files(dirname(__file__))
 
-        random_cat_intent = IntentBuilder("RandomCatIntent").\
-            require("CatEventKeyword").build()
-        self.register_intent(random_cat_intent, self.handle_cat_event_intent)
+        prefixes = [
+            'number']
+        self.__register_prefixed_regex(prefixes, "(?P<Numbers>.*)")
+
+        intent = IntentBuilder("NumberIntent").require(
+            "NumberKeyword").require("Numbers").build()
+        self.register_intent(intent, self.handle_number_intent)
+
+
+      #  self.load_data_files(dirname(__file__))
+
+      #  random_cat_intent = IntentBuilder("NumberIntent").\
+      #      require("NumberKeyword").build()
+      #  self.register_intent(number_intent, self.handle_number_intent)
 
 
 
@@ -62,11 +64,12 @@ class CatFactSkill(MycroftSkill):
     # actually speak the text it's passed--instead, that text is the filename
     # of a file in the dialog folder, and Mycroft speaks its contents when
     # the method is called.
-    def handle_cat_event_intent(self, message):
-        url2 = "https://catfact.ninja/fact"
+    def handle_number_intent(self, message):
+        nrs = message.data.get("Numbers")
+        url = "http://numbersapi.com/"+nrs;
         #headers = {'Accept': 'text/plain'}
-        r = requests.get(url2)
-        fact = r['fact']
+        r = requests.get(url)
+        fact = r.content
         self.speak( fact )
 
 
@@ -80,4 +83,4 @@ class CatFactSkill(MycroftSkill):
 # The "create_skill()" method is used to create an instance of the skill.
 # Note that it's outside the class itself.
 def create_skill():
-    return CatFactSkill()
+    return NumberSkill()

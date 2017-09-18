@@ -1,7 +1,8 @@
 {
-  "utterance": "cat fact",
-  "intent_type": "RandomCatIntent",
+  "utterance": "info on number 42",
+  "intent_type": "NumberIntent",
   "intent": {
-    "CatEventKeyword": "cat fact"
+    "NumberKeyword": "info on number",
+    "Numbers": "42"
   }
 }
