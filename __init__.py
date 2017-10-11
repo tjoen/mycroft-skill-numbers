@@ -14,12 +14,9 @@ class NumberSkillSkill(MycroftSkill):
         super(NumberSkillSkill, self).__init__("NumberSkillSkill")
 
     def initialize(self):
-
-
 	number_intent = IntentBuilder("NumberIntent").\
-            require("NumberKeyword").optionally("numbers").optionally("Numbers").build()
+            require("NumberKeyword").optionally("number_guess").optionally("cool_number").build()
         self.register_intent(number_intent, self.handle_number_intent)
-
 
 
    # The "handle_xxxx_intent" functions define Mycroft's behavior when
@@ -30,9 +27,10 @@ class NumberSkillSkill(MycroftSkill):
     # the method is called.
     def handle_number_intent(self, message):
     
-        nrs = message.data.get("Numbers")
+        nrs = message.data.get("cool_number")
+        LOGGER.debug("The number is: {}".format(nrs))
         LOGGER.debug("The message data is: {}".format(message.data))
-        url = "http://numbersapi.com/"+nrs;
+        url = "http://numbersapi.com/"+str(nrs)
         #headers = {'Accept': 'text/plain'}
         r = requests.get(url)
         fact = r.content
@@ -40,7 +38,6 @@ class NumberSkillSkill(MycroftSkill):
 
     def stop(self):
         pass
-
 
 def create_skill():
     return NumberSkillSkill()
