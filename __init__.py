@@ -1,22 +1,3 @@
-# Copyright 2016 Mycroft AI, Inc.
-#
-# This file is part of Mycroft Core.
-#
-# Mycroft Core is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Mycroft Core is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Mycroft Core.  If not, see <http://www.gnu.org/licenses/>.
-
-from os.path import dirname
-
 from adapt.intent import IntentBuilder
 from mycroft.skills.core import MycroftSkill
 from mycroft.util.log import getLogger
@@ -28,59 +9,38 @@ __author__ = 'tjoen'
 # statements will show up in the command line when running Mycroft.
 LOGGER = getLogger(__name__)
 
-# The logic of each skill is contained within its own class, which inherits
-# base methods from the MycroftSkill class with the syntax you can see below:
-# "class ____Skill(MycroftSkill)"
-class NumberSkill(MycroftSkill):
-
-    # The constructor of the skill, which calls MycroftSkill's constructor
+class NumberSkillSkill(MycroftSkill):
     def __init__(self):
-        super(NumberSkill, self).__init__(name="NumberSkill")
+        super(NumberSkillSkill, self).__init__("NumberSkillSkill")
 
-    # This method loads the files needed for the skill's functioning, and
-    # creates and registers each intent that the skill uses
     def initialize(self):
 
-        prefixes = [
-            'number']
-        self.__register_prefixed_regex(prefixes, "(?P<Numbers>.*)")
 
-        intent = IntentBuilder("NumberIntent").require(
-            "NumberKeyword").require("Numbers").build()
-        self.register_intent(intent, self.handle_number_intent)
-
-
-      #  self.load_data_files(dirname(__file__))
-
-      #  random_cat_intent = IntentBuilder("NumberIntent").\
-      #      require("NumberKeyword").build()
-      #  self.register_intent(number_intent, self.handle_number_intent)
+	number_intent = IntentBuilder("NumberIntent").\
+            require("NumberKeyword").optionally("numbers").optionally("Numbers").build()
+        self.register_intent(number_intent, self.handle_number_intent)
 
 
 
-    # The "handle_xxxx_intent" functions define Mycroft's behavior when
+   # The "handle_xxxx_intent" functions define Mycroft's behavior when
     # each of the skill's intents is triggered: in this case, he simply
     # speaks a response. Note that the "speak_dialog" method doesn't
     # actually speak the text it's passed--instead, that text is the filename
     # of a file in the dialog folder, and Mycroft speaks its contents when
     # the method is called.
     def handle_number_intent(self, message):
+    
         nrs = message.data.get("Numbers")
+        LOGGER.debug("The message data is: {}".format(message.data))
         url = "http://numbersapi.com/"+nrs;
         #headers = {'Accept': 'text/plain'}
         r = requests.get(url)
         fact = r.content
         self.speak( fact )
 
-
-    # The "stop" method defines what Mycroft does when told to stop during
-    # the skill's execution. In this case, since the skill's functionality
-    # is extremely simple, the method just contains the keyword "pass", which
-    # does nothing.
     def stop(self):
         pass
 
-# The "create_skill()" method is used to create an instance of the skill.
-# Note that it's outside the class itself.
+
 def create_skill():
-    return NumberSkill()
+    return NumberSkillSkill()
