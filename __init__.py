@@ -27,11 +27,11 @@ class NumberSkillSkill(MycroftSkill):
     # the method is called.
     def handle_number_intent(self, message):
     
-        nrs = message.data.get("cool_number")
+        nrs = str(message.data.get("cool_number"))
         LOGGER.debug("The number is: {}".format(nrs))
         LOGGER.debug("The message data is: {}".format(message.data))
-	if str(nrs).isdigit():
-    		url = "http://numbersapi.com/"+str(nrs)
+	if nrs.isdigit():
+    		url = "http://numbersapi.com/"+nrs
         	r = requests.get(url)
         	fact = r.content
         	self.speak( fact )
