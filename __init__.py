@@ -31,10 +31,10 @@ class NumberSkillSkill(MycroftSkill):
         line = str(message.data.get("utterance"))
 
 	nrs = line.split("number ")[-1].split()[0]
-	if nrs:
+	if nrs.isdigit():
 		#print nrs.start()
-        	LOGGER.debug("The number is: {}".format(nrs)
-        	LOGGER.debug("The message data is: {}".format(message.data))
+        	LOGGER.debug("Found number: {}".format(nrs))
+        	#LOGGER.debug("The message data is: {}".format(message.data))
     		url = "http://numbersapi.com/"+nrs
         	r = requests.get(url)
         	fact = r.content
