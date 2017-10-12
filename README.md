@@ -15,7 +15,7 @@ Working features:
  - what can you tell me about number 73
 
 Known issues:
- - regex need refining, probably
+ - Gives error if a fact does not exist, mostly numbers > 100
 
 TODO:
- - testing it a lot
+ - testing if a fact exists, obviously.
