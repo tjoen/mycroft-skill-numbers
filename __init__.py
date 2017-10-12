@@ -30,11 +30,14 @@ class NumberSkillSkill(MycroftSkill):
         nrs = message.data.get("cool_number")
         LOGGER.debug("The number is: {}".format(nrs))
         LOGGER.debug("The message data is: {}".format(message.data))
-        url = "http://numbersapi.com/"+str(nrs)
-        #headers = {'Accept': 'text/plain'}
-        r = requests.get(url)
-        fact = r.content
-        self.speak( fact )
+	if str(nrs).isdigit():
+    		url = "http://numbersapi.com/"+str(nrs)
+        	r = requests.get(url)
+        	fact = r.content
+        	self.speak( fact )
+	else:
+    		self.speak( "I am not sure what you mean?" )
+        
 
     def stop(self):
         pass
