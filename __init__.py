@@ -29,12 +29,12 @@ class NumberSkillSkill(MycroftSkill):
     
         #nrs = str(message.data.get("cool_number"))
         line = str(message.data.get("utterance"))
-        nrs = int(line.split()[0])
 
-
-        LOGGER.debug("The number is: {}".format(nrs))
-        LOGGER.debug("The message data is: {}".format(message.data))
-	if nrs.isdigit():
+	nrs = re.search('\d', line)
+	if nrs:
+		#print nrs.start()
+        	LOGGER.debug("The number is: {}".format(nrs))
+        	LOGGER.debug("The message data is: {}".format(message.data))
     		url = "http://numbersapi.com/"+nrs
         	r = requests.get(url)
         	fact = r.content
