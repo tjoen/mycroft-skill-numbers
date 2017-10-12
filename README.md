@@ -18,4 +18,4 @@ Known issues:
  - regex need refining, probably
 
 TODO:
- - ...
+ - testing it a lot
