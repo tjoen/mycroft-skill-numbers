@@ -15,7 +15,7 @@ Working features:
  - what can you tell me about number 73
 
 Known issues:
- - Gives error if a fact does not exist, mostly numbers > 100
+ - none, so far
 
 TODO:
- - testing if a fact exists, obviously.
+ - Add useless year info from api.
