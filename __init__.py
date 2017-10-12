@@ -27,7 +27,11 @@ class NumberSkillSkill(MycroftSkill):
     # the method is called.
     def handle_number_intent(self, message):
     
-        nrs = str(message.data.get("cool_number"))
+        #nrs = str(message.data.get("cool_number"))
+        line = str(message.data.get("utterance"))
+        nrs = int(line.split()[0])
+
+
         LOGGER.debug("The number is: {}".format(nrs))
         LOGGER.debug("The message data is: {}".format(message.data))
 	if nrs.isdigit():
