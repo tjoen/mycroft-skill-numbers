@@ -33,9 +33,9 @@ class NumberSkillSkill(MycroftSkill):
 	nrs = re.search('\d', line)
 	if nrs:
 		#print nrs.start()
-        	LOGGER.debug("The number is: {}".format(nrs))
+        	LOGGER.debug("The number is: {}".format(nrs.start()))
         	LOGGER.debug("The message data is: {}".format(message.data))
-    		url = "http://numbersapi.com/"+nrs
+    		url = "http://numbersapi.com/"+nrs.start()
         	r = requests.get(url)
         	fact = r.content
         	self.speak( fact )
