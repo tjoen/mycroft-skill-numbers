@@ -15,7 +15,7 @@ class NumberSkillSkill(MycroftSkill):
 
     def initialize(self):
 	number_intent = IntentBuilder("NumberIntent").\
-	require("NumberKeyword").optionally("number_guess").optionally("cool_number").build()
+            require("NumberKeyword").optionally("number_guess").optionally("cool_number").build()
         self.register_intent(number_intent, self.handle_number_intent)
 
 
