@@ -14,7 +14,7 @@ class NumberSkillSkill(MycroftSkill):
         super(NumberSkillSkill, self).__init__("NumberSkillSkill")
 
     def initialize(self):
-	number_intent = IntentBuilder("NumberIntent")./
+	number_intent = IntentBuilder("NumberIntent"). \
 	require("NumberKeyword").optionally("number_guess").optionally("cool_number").build()
         self.register_intent(number_intent, self.handle_number_intent)
 
